@@ -19,11 +19,9 @@ def solution(jobs):
             time, start = hq.heappop(tasks)
             t += time
             answer += (t - start)     
-            print(answer)
         else:
             start, time = hq.heappop(jobs)
             t = start + time
             answer += (t - start)     
-            print(answer)
     
     return answer // count
