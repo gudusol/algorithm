@@ -30,10 +30,12 @@ def solution(N, number):
 #                     if j >= 0:
 #                         temp.add(double)
 #                         dp[double] = min(dp[double], dp[i] + dp[j]) if double in dp else dp[i] + dp[j]
-
+        
+        if number in dp:
+            return dp[number]
         num.append(temp)
         
-    return dp[number] if number in dp else -1
+    return -1
 
 # 1개 짜리 2중 포문으로 2개짜리 만들고
 # 2개 짜리 2중 포문으로 4개짜리 만들고 => 1개 + 3개 
