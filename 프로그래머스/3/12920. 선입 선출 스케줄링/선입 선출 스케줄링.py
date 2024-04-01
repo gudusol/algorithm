@@ -17,12 +17,18 @@ def solution(n, cores):
             lo = mid
     for idx, c in enumerate(cores):
         n -= lo // c
-        remain = hi % c
-        cores[idx] = remain if remain == 0 else c - remain
+        # remain = hi % c
+        # cores[idx] = remain if remain == 0 else c - remain
+    
+    # for idx, c in enumerate(cores):
+    #     if c == 0:
+    #         n -= 1
+    #         if n == 0:
+    #             return idx + 1
     
     for idx, c in enumerate(cores):
-        if c == 0:
+        if hi % c == 0:
             n -= 1
             if n == 0:
                 return idx + 1
-    return 
+    return
