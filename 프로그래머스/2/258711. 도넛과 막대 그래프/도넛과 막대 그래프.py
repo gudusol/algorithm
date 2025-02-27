@@ -1,5 +1,3 @@
-import sys
-sys.setrecursionlimit(10**6)
 from collections import deque, defaultdict
 
 def solution(edges):
@@ -29,25 +27,31 @@ def solution(edges):
             break
     
     visited = [False for _ in range(max(nodes) + 1)]
-    def dfs(cur, count):
-        count[0] += 1
-        count[1] += len(to_edges[cur])
-        for node in to_edges[cur]:
-            if not visited[node]:
-                visited[node] = True
-                dfs(node, count)
-
-    for node in to_edges[answer[0]]:
-        count = [0, 0]
-        visited[node] = True
+    def bfs(cur):
+        node_count, edge_count = [1, 0]
+        visited[cur] = True
+        queue = deque([cur])
         
-        dfs(node, count)
+        while queue:
+            node = queue.popleft()
+            for next_node in to_edges[node]:
+                if not visited[next_node]:
+                    visited[next_node] = True
+                    node_count += 1
+                    edge_count += 1
+                    queue.append(next_node)
+                else:
+                    edge_count += 1
+        
+        return node_count, edge_count
+    for node in to_edges[answer[0]]:
+        node_count, edge_count = bfs(node)
 
-        if count[0] == count[1]:
+        if node_count == edge_count:
             answer[1] += 1
-        elif count[0] == count[1] + 1:
+        elif node_count == edge_count + 1:
             answer[2] += 1
-        elif count[0] + 1 == count[1]:
+        elif node_count + 1 == edge_count:
             answer[3] += 1
     
     return answer
