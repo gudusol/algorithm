@@ -27,31 +27,28 @@ def solution(edges):
             break
     
     visited = [False for _ in range(max(nodes) + 1)]
-    def bfs(cur):
-        node_count, edge_count = [1, 0]
-        visited[cur] = True
-        queue = deque([cur])
-        
+    for node in to_edges[answer[0]]:
+        visited[node] = True
+        queue = deque([node])
+        is_break = False
         while queue:
-            node = queue.popleft()
-            for next_node in to_edges[node]:
+            cur = queue.popleft()
+            
+            if len(to_edges[cur]) == 2:
+                answer[3] += 1
+                is_break = True
+                break
+            
+            if (len(to_edges[cur]) == 0) or (len(from_edges[cur]) == 0):
+                answer[2] += 1
+                is_break = True
+                break
+            
+            for next_node in to_edges[cur]:
                 if not visited[next_node]:
                     visited[next_node] = True
-                    node_count += 1
-                    edge_count += 1
                     queue.append(next_node)
-                else:
-                    edge_count += 1
-        
-        return node_count, edge_count
-    for node in to_edges[answer[0]]:
-        node_count, edge_count = bfs(node)
-
-        if node_count == edge_count:
+        if not is_break:
             answer[1] += 1
-        elif node_count == edge_count + 1:
-            answer[2] += 1
-        elif node_count + 1 == edge_count:
-            answer[3] += 1
     
     return answer
