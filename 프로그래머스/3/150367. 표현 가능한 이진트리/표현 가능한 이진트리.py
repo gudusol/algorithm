@@ -2,15 +2,13 @@ import sys
 sys.setrecursionlimit(10**6)
 
 def check(string):
+    center_idx = len(string) // 2
     if len(string) == 1:
         return True
-    center_idx = len(string) // 2
     if string[center_idx] == '0':
         if '1' in string:
             return False
-    else:
-        if len(string) == 3:
-            return True
+
     if not check(string[:center_idx]) or not check(string[center_idx+1:]):
         return False
     
