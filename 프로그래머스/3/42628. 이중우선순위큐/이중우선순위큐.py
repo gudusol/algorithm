@@ -1,31 +1,28 @@
-import heapq as hq
+from collections import deque
 
 def solution(operations):
-    min_heap = []
-    max_heap = []
+    que = deque([])
+    
     for operation in operations:
-        op, num = operation.split(" ")
-        num = int(num)
-        
+        op, num = operation.split(' ')
         if op == "I":
-            hq.heappush(min_heap, num)
-            hq.heappush(max_heap, - num)
-        elif op == "D":
-            if len(min_heap) == 0:
-                continue
-            
-            if num == 1:
-                hq.heappop(max_heap)
-                min_heap = []
-                for i in max_heap:
-                    hq.heappush(min_heap, -i)
-            elif num == -1:
-                hq.heappop(min_heap)
-                max_heap = []
-                for i in min_heap:
-                    hq.heappush(max_heap, -i)
-    if len(min_heap) == 0:
-        return [0, 0]
-    else:
-        return [- hq.heappop(max_heap), hq.heappop(min_heap)]
+            que.append(int(num))
         
+        elif op == "D":
+            if len(que) == 0:
+                continue
+            que = deque(sorted(list(que)))
+            if num == "1":
+                que.pop()
+            elif num == "-1":
+                que.popleft()
+                
+    que = deque(sorted(list(que)))
+    answer = []
+    if len(que) == 0:
+        answer = [0, 0]
+    elif len(que) == 1:
+        answer = [que[0], que[0]]
+    else:
+        answer = [que.pop(), que.popleft()]
+    return answer
