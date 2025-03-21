@@ -11,7 +11,7 @@ stack = []
 
 for s in string:
     stack += s
-    if stack[len(stack) - bomb_len : len(stack)] == bomb:
+    if stack[-bomb_len:] == bomb:
         for _ in range(bomb_len):
             stack.pop()
 
