@@ -1,20 +1,13 @@
 import sys
-from collections import defaultdict
 
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-notepad = defaultdict(bool)
-for _ in range(N):
-    notepad[input().strip()] = True
 
-answer = len(notepad)
+notepad = set(input().strip() for _ in range(N))
 
 for _ in range(M):
-    keywords = input().strip().split(",")
-    for k in keywords:
-        if notepad[k]:
-            notepad[k] = False
-            answer -= 1
+    keywords = set(input().strip().split(","))
+    notepad -= keywords
 
-    print(answer)
+    print(len(notepad))
