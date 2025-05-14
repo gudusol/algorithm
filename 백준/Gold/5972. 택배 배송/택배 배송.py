@@ -20,6 +20,8 @@ distance[1] = 0
 que = [(0, 1)] # 거리, num
 while que:
     cur_dis, cur = hq.heappop(que)
+    if cur_dis < distance[cur]:
+        continue
     for next, next_dis in maps[cur]:
         if cur_dis + next_dis < distance[next]:
             distance[next] = cur_dis + next_dis
