@@ -23,7 +23,7 @@ while que:
     if cur_dis < distance[cur]:
         continue
     for next, next_dis in maps[cur]:
-        if cur_dis + next_dis < distance[next]:
+        if not visited[next] and  cur_dis + next_dis < distance[next]:
             distance[next] = cur_dis + next_dis
             hq.heappush(que, (distance[next], next))
     visited[cur] = True
