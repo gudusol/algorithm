@@ -1,31 +1,39 @@
 import sys
-from collections import defaultdict
+
 input = sys.stdin.readline
+
 N = int(input())
-words = defaultdict(list)
-for _ in range(N):
-    w = input().strip()
-    words[w[0]].append(w)
-answer = 0
-S = ''
-T = ''
+words = [(input().strip(), i) for i in range(N)]
+sorted_words = sorted(words)
+max_length = 0
+length = [0 for _ in range(N)]
 
-for word_list in words.values():
-    for i in range(len(word_list)):
-        for j in range(i+1, len(word_list)):
-            cur_s = word_list[i]
-            cur_t = word_list[j]
+for i in range(N - 1):
+    cur, cur_idx = sorted_words[i]
+    next, next_idx = sorted_words[i + 1]
 
-            idx = 0
-            len_cur_s = len(cur_s)
-            len_cur_t = len(cur_t)
-            while idx < len_cur_s and idx < len_cur_t and cur_s[idx] == cur_t[idx]:
-                idx += 1
-            
-            if idx > answer:
-                answer = idx
-                S = cur_s
-                T = cur_t
+    idx = 0
+    len_cur = len(cur)
+    len_next = len(next)
 
-print(S)
-print(T)
+    while idx < len_cur and idx < len_next and cur[idx] == next[idx]:
+        idx += 1
+    if idx >= max_length:
+        max_length = idx
+        length[cur_idx] = idx
+        length[next_idx] = idx
+
+count = 0
+pre = ""
+index = 0
+while length[index] != max_length:
+    index += 1
+print(words[index][0])
+pre = words[index][0][:max_length]
+
+index += 1
+while True:
+    if length[index] == max_length and words[index][0][:max_length] == pre:
+        break
+    index += 1
+print(words[index][0])
