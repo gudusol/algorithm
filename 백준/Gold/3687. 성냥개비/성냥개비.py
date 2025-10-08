@@ -11,23 +11,15 @@ num_count = {2: "1", 3: "7", 4: "4", 5: "2", 6: "0", 7: "8"}
 
 for c in num_count:
     dp[c] = int(num_count[c])
-dp[6] = "6"
-dp[8] = "10"
+dp[6] = 6
+dp[8] = 10
 
 for i in range(9, len(dp)):
     for k, v in num_count.items():
         if k == 6:
-            dp[i] = str(
-                min(dp[i] if dp[i] == math.inf else int(dp[i]), int(str(dp[i - k]) + v))
-            )
+            dp[i] = min(dp[i], int(str(dp[i - k]) + v))
         else:
-            dp[i] = str(
-                min(
-                    dp[i] if dp[i] == math.inf else int(dp[i]),
-                    int(str(dp[i - k]) + v),
-                    int(v + str(dp[i - k])),
-                )
-            )
+            dp[i] = min(dp[i], int(str(dp[i - k]) + v), int(v + str(dp[i - k])))
 
 for num in numbers:
     answer_max = ""
